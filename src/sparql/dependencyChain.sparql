@@ -1,0 +1,7 @@
+PREFIX se: <http://example.org/se-ontology#>
+SELECT ?workflow ?depends
+WHERE {
+?wp se:id "WP-FireDetection" .
+?workflow se:dependsOn+ ?wp . # Transitive closure
+BIND(STRAFTER(STR(?workflow), "#") AS ?depends)
+}

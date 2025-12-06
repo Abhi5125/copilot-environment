@@ -1,0 +1,6 @@
+PREFIX se: <http://example.org/se-ontology#>
+SELECT ?component ?trace
+WHERE {
+?req se:id "REQ-001" .
+?trace se:verifies ?req ; se:satisfies ?component .
+}

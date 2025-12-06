@@ -1,0 +1,7 @@
+PREFIX se: <http://example.org/se-ontology#>
+SELECT ?req ?priority
+WHERE {
+?req a se:Requirement ; se:priority ?priority .
+?comp se:satisfies ?req ; se:name "AutonomousFleet" .
+FILTER NOT EXISTS { ?wf se:verifies ?req }
+}
