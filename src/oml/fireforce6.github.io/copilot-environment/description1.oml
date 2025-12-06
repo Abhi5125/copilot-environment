@@ -1,0 +1,9 @@
+@dc:title "Copilot Environment description"
+@dc:description "An example of a description."
+description <https://fireforce6.github.io/copilot-environment/description1#> as description1 {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+  
+    /* REPLACE WITH YOUR DESCRIPTION CONTENT */
+
+ }

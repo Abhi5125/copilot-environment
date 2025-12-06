@@ -1,0 +1,11 @@
+@dc:title "Copilot Environment Bundle"
+@dc:description "A bundle that includes all descriptions in the Copilot Environment project."
+description bundle <https://fireforce6.github.io/copilot-environment/bundle#> as d-bundle {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+     uses <https://fireforce6.github.io/sierra/bundle#>
+
+     // All descriptions included in this bundle
+     includes <https://fireforce6.github.io/copilot-environment/description1#>
+
+}
