@@ -1,0 +1,29 @@
+@dc:title "CoPilot Requirements"
+@dc:description "Requirements for the Systems Engineering CoPilot system."
+description <https://github.com/Abhi5125/cs188proj/requirements#> as requirements {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+	uses <https://fireforce6.github.io/sierra/base#> as base
+	uses <https://fireforce6.github.io/sierra/requirement#> as requirement
+	extends <https://github.com/Abhi5125/cs188proj/stakeholders#> as stakeholders
+
+	instance r1-query-support : requirement:Requirement [
+		base:description "Support natural language queries on KB."
+		base:expression "CoPilot SHALL answer queries with KB context and citations."
+		requirement:isExpressedBy stakeholders:se-engineer
+		requirement:isExpressedBy stakeholders:proj-manager
+	]
+
+	instance r2-file-access : requirement:Requirement [
+		base:description "Access and fetch various file types from repos."
+		base:expression "CoPilot SHALL fetch text files from Git repos."
+		requirement:isExpressedBy stakeholders:dev
+	]
+
+	instance r3-current-data : requirement:Requirement [
+		base:description "Ensure KB is up-to-date with repo versions."
+		base:expression "CoPilot SHALL use specified version or main branch."
+		requirement:isExpressedBy stakeholders:se-engineer
+		requirement:isExpressedBy stakeholders:proj-manager
+	]
+}

@@ -1,0 +1,20 @@
+@dc:title "CoPilot Missions"
+@dc:description "Missions for the Systems Engineering CoPilot system."
+description <https://github.com/Abhi5125/cs188proj/missions#> as missions {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+	uses <https://fireforce6.github.io/sierra/base#> as base
+	uses <https://fireforce6.github.io/sierra/capability#> as capability
+
+	instance m1-query : capability:Mission [
+		base:description "Enable contextual querying of work packages."
+	]
+
+	instance m2-integration : capability:Mission [
+		base:description "Easy integration with Git repos for KB."
+	]
+
+	instance m3-workflow : capability:Mission [
+		base:description "Assist in SE workflows via AI responses."
+	]
+}

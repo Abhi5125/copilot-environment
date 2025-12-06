@@ -1,0 +1,172 @@
+@dc:title "CoPilot Processes"
+@dc:description "Processes for the Systems Engineering CoPilot system."
+description <https://github.com/Abhi5125/cs188proj/processes#> as processes {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+	uses <https://fireforce6.github.io/sierra/base#> as base
+	uses <https://fireforce6.github.io/sierra/process#> as ^process
+	uses <https://fireforce6.github.io/sierra/entity#> as ^entity
+	extends <https://github.com/Abhi5125/cs188proj/capabilities#> as capabilities
+	extends <https://github.com/Abhi5125/cs188proj/entities#> as entities
+
+	instance p1-auth : process:Process [
+		base:description "Authenticate with GitHub if needed."
+		process:describes capabilities:c1-auth
+	]
+
+	instance a1-pat-input : process:Activity [
+		base:description "Input PAT in UI."
+		process:isAllocatedTo entities:copilot-ui
+	]
+
+	instance a2-pat-validate : process:Activity [
+		base:description "Validate PAT."
+		process:isAllocatedTo entities:github-app
+	]
+
+	instance d1-pat : base:Data [
+		base:description "Personal Access Token."
+	]
+
+	relation instance df1-pat-flow : process:DataFlow [
+		from a1-pat-input
+		to a2-pat-validate
+		base:description "PAT flow to validation."
+		process:carries d1-pat
+		process:isIncludedIn p1-auth
+	]
+
+	instance p2-fetch : process:Process [
+		base:description "Fetch and build KB."
+		process:describes capabilities:c2-fetch
+	]
+
+	instance a3-select : process:Activity [
+		base:description "Select repo/version."
+		process:isAllocatedTo entities:copilot-ui
+	]
+
+	instance a4-tree : process:Activity [
+		base:description "Fetch file tree."
+		process:isAllocatedTo entities:github-org
+	]
+
+	instance a5-content : process:Activity [
+		base:description "Fetch file content."
+		process:isAllocatedTo entities:copilot-ui
+	]
+
+	instance a6-deps : process:Activity [
+		base:description "Fetch dependencies."
+		process:isAllocatedTo entities:dependency-repo
+	]
+
+	instance d2-selection : base:Data [
+		base:description "Repo selection."
+	]
+
+	instance d3-tree : base:Data [
+		base:description "File tree."
+	]
+
+	instance d4-content : base:Data [
+		base:description "File content."
+	]
+
+	instance d5-kb : base:Data [
+		base:description "Knowledge base."
+	]
+
+	relation instance df2-select-tree : process:DataFlow [
+		from a3-select
+		to a4-tree
+		base:description "Selection to tree fetch."
+		process:carries d2-selection
+		process:isIncludedIn p2-fetch
+	]
+
+	relation instance df3-tree-content : process:DataFlow [
+		from a4-tree
+		to a5-content
+		base:description "Tree to content fetch."
+		process:carries d3-tree
+		process:isIncludedIn p2-fetch
+	]
+
+	relation instance df4-content-deps : process:DataFlow [
+		from a5-content
+		to a6-deps
+		base:description "Content to deps fetch."
+		process:carries d4-content
+		process:isIncludedIn p2-fetch
+	]
+
+	relation instance df5-deps-kb : process:DataFlow [
+		from a6-deps
+		to a5-content
+		base:description "Deps to KB build."
+		process:carries d5-kb
+		process:isIncludedIn p2-fetch
+	]
+
+	instance p3-query : process:Process [
+		base:description "Process queries on KB."
+		process:describes capabilities:c3-query
+	]
+
+	instance a7-query : process:Activity [
+		base:description "Input query."
+		process:isAllocatedTo entities:copilot-ui
+	]
+
+	instance a8-prompt : process:Activity [
+		base:description "Build prompt."
+		process:isAllocatedTo entities:copilot-ui
+	]
+
+	instance a9-llm : process:Activity [
+		base:description "Call LLM."
+		process:isAllocatedTo entities:llm
+	]
+
+	instance a10-display : process:Activity [
+		base:description "Display response."
+		process:isAllocatedTo entities:copilot-ui
+	]
+
+	instance d6-query : base:Data [
+		base:description "User query."
+	]
+
+	instance d7-prompt : base:Data [
+		base:description "Prompt with KB."
+	]
+
+	instance d8-response : base:Data [
+		base:description "LLM response."
+	]
+
+	relation instance df6-query-prompt : process:DataFlow [
+		from a7-query
+		to a8-prompt
+		base:description "Query to prompt."
+		process:carries d6-query
+		process:isIncludedIn p3-query
+	]
+
+	relation instance df7-prompt-llm : process:DataFlow [
+		from a8-prompt
+		to a9-llm
+		base:description "Prompt to LLM."
+		process:carries d7-prompt
+		process:isIncludedIn p3-query
+	]
+
+	relation instance df8-llm-display : process:DataFlow [
+		from a9-llm
+		to a10-display
+		base:description "Response to display."
+		process:carries d8-response
+		process:isIncludedIn p3-query
+	]
+}

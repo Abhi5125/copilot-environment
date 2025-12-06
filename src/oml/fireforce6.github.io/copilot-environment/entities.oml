@@ -1,0 +1,54 @@
+@dc:title "CoPilot Entities"
+@dc:description "Entities in the Systems Engineering CoPilot system."
+description <https://github.com/Abhi5125/cs188proj/entities#> as entities {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+	uses <https://fireforce6.github.io/sierra/base#> as base
+	uses <https://fireforce6.github.io/sierra/entity#> as ^entity
+	extends <https://github.com/Abhi5125/cs188proj/capabilities#> as capabilities
+
+	instance github-org : entity:Entity [
+		base:description "GitHub organization hosting the CoPilot and work packages."
+	]
+
+	instance github-app : entity:Entity [
+		base:description "GitHub App for API authentication if needed."
+	]
+
+	instance copilot-ui : entity:Entity [
+		base:description "Streamlit-based user interface for queries."
+	]
+
+	instance work-package : entity:Entity [
+		base:description "A Git repository as a work package, e.g., project-environment."
+	]
+
+	instance dependency-repo : entity:Entity [
+		base:description "Dependent repositories fetched recursively."
+	]
+
+	instance knowledge-base : entity:Entity [
+		base:description "Text-based KB from fetched files."
+	]
+
+	instance llm : entity:Entity [
+		base:description "Large language model for query responses."
+	]
+
+	ref instance capabilities:c1-auth [
+		entity:involves github-app
+		entity:involves copilot-ui
+	]
+
+	ref instance capabilities:c2-fetch [
+		entity:involves copilot-ui
+		entity:involves work-package
+		entity:involves dependency-repo
+	]
+
+	ref instance capabilities:c3-query [
+		entity:involves copilot-ui
+		entity:involves knowledge-base
+		entity:involves llm
+	]
+}

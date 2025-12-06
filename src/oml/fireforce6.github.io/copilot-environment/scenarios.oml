@@ -1,0 +1,77 @@
+@dc:title "CoPilot Scenarios"
+@dc:description "Scenarios for the Systems Engineering CoPilot system."
+description <https://github.com/Abhi5125/cs188proj/scenarios#> as scenarios {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+	uses <https://fireforce6.github.io/sierra/base#> as base
+	uses <https://fireforce6.github.io/sierra/scenario#> as scenario
+	uses <https://fireforce6.github.io/sierra/state#> as state
+	extends <https://github.com/Abhi5125/cs188proj/entities#> as entities
+	extends <https://github.com/Abhi5125/cs188proj/capabilities#> as capabilities
+
+	instance s1-load-success : scenario:Scenario [
+		base:description "Successful KB loading scenario."
+	]
+
+	instance s1-ui-lifeline : scenario:Lifeline [
+		base:description "UI lifeline in load success."
+		scenario:represents entities:copilot-ui
+		scenario:lifelineOf s1-load-success
+	]
+
+	instance s1-repo-lifeline : scenario:Lifeline [
+		base:description "Repo lifeline in load success."
+		scenario:represents entities:work-package-repo
+		scenario:lifelineOf s1-load-success
+	]
+
+	instance s1-t1 : scenario:TimePoint [
+		base:description "UI requests repo."
+		scenario:occursOn s1-ui-lifeline
+	]
+
+	instance s1-t2 : scenario:TimePoint [
+		base:description "Repo provides files."
+		scenario:occursOn s1-repo-lifeline
+		scenario:after s1-t1
+	]
+
+	instance s1-t3 : scenario:TimePoint [
+		base:description "UI builds KB."
+		scenario:occursOn s1-ui-lifeline
+		scenario:after s1-t2
+	]
+
+	instance s2-query-success : scenario:Scenario [
+		base:description "Successful query processing scenario."
+	]
+
+	instance s2-ui-lifeline : scenario:Lifeline [
+		base:description "UI lifeline in query success."
+		scenario:represents entities:copilot-ui
+		scenario:lifelineOf s2-query-success
+	]
+
+	instance s2-llm-lifeline : scenario:Lifeline [
+		base:description "LLM lifeline in query success."
+		scenario:represents entities:llm
+		scenario:lifelineOf s2-query-success
+	]
+
+	instance s2-t1 : scenario:TimePoint [
+		base:description "UI sends query."
+		scenario:occursOn s2-ui-lifeline
+	]
+
+	instance s2-t2 : scenario:TimePoint [
+		base:description "LLM processes prompt."
+		scenario:occursOn s2-llm-lifeline
+		scenario:after s2-t1
+	]
+
+	instance s2-t3 : scenario:TimePoint [
+		base:description "UI displays response."
+		scenario:occursOn s2-ui-lifeline
+		scenario:after s2-t2
+	]
+}

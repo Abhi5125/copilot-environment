@@ -1,0 +1,20 @@
+@dc:title "CoPilot Stakeholders"
+@dc:description "Stakeholders for the Systems Engineering CoPilot system."
+description <https://github.com/Abhi5125/cs188proj/stakeholders#> as stakeholders {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+	uses <https://fireforce6.github.io/sierra/base#> as base
+	uses <https://fireforce6.github.io/sierra/requirement#> as requirement
+
+	instance se-engineer : requirement:Stakeholder [
+		base:description "Systems engineers querying project data."
+	]
+
+	instance proj-manager : requirement:Stakeholder [
+		base:description "Project managers overseeing dependencies."
+	]
+
+	instance dev : requirement:Stakeholder [
+		base:description "Developers maintaining the CoPilot."
+	]
+}

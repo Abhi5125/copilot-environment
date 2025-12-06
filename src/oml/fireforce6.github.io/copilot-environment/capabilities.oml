@@ -1,0 +1,37 @@
+@dc:title "CoPilot Capabilities"
+@dc:description "Capabilities of the Systems Engineering CoPilot system."
+description <https://github.com/Abhi5125/cs188proj/capabilities#> as capabilities {
+
+	uses <http://purl.org/dc/elements/1.1/> as dc
+	uses <https://fireforce6.github.io/sierra/base#> as base
+	uses <https://fireforce6.github.io/sierra/capability#> as capability
+	extends <https://github.com/Abhi5125/cs188proj/requirements#> as requirements 
+	extends <https://github.com/Abhi5125/cs188proj/missions#> as missions
+
+	instance c1-auth : capability:Capability [
+		base:description "Authenticate with GitHub for repo access."
+		capability:isDerivedFrom requirements:r2-file-access
+	]
+
+	instance c2-fetch : capability:Capability [
+		base:description "Fetch files from repos to build KB."
+		capability:isDerivedFrom requirements:r2-file-access
+		capability:isDerivedFrom requirements:r3-current-data
+		capability:requires c1-auth
+	]
+
+	instance c3-query : capability:Capability [
+		base:description "Process queries using LLM on KB."
+		capability:isDerivedFrom requirements:r1-query-support
+		capability:requires c2-fetch
+	]
+
+	ref instance missions:m1-query [
+		base:aggregates c3-query
+	]
+
+	ref instance missions:m2-integration [
+		base:aggregates c1-auth
+		base:aggregates c2-fetch
+	]
+}
